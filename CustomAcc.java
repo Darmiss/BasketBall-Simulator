@@ -35,7 +35,11 @@ private double accCost;
 	}
 
 
-
+	public String toString()
+	{
+		return accType + "|Points: " + accPoints + "|Cost: " + accCost;
+		
+	}
 
 
 

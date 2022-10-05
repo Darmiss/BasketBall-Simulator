@@ -15,9 +15,12 @@ public class playerType extends Player
 	}
 	
 	
-	
-	
-	
+	public String toString()
+	{
+		
+		return playerType + " " + "|Points: " + points + "  " + "|Cost: " + cost;
+		
+	}
 	
 	
 }

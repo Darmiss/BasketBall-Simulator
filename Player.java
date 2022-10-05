@@ -21,4 +21,5 @@ public abstract class Player
 	{
 		return playerType;
 	}
+
 }

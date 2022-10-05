@@ -18,8 +18,9 @@ public class playerAcc extends PlayerAccessories
 
 	public String getDesc()
 	{
-		return player.getDesc() + " " + accType + " ";
+		return player.getDesc() + " " + "Accessory: " + accType + " ";
 	}
+	
 	
 	public double getCost()
 	{
@@ -29,8 +30,13 @@ public class playerAcc extends PlayerAccessories
 	
 	public int getPoints()
 	{
-		return accPoints + player.getPoints();
+		return  + accPoints + player.getPoints();
 	}
 	
+	public String toString() //to make it look nice in the main program
+	{
+		
+		return  "Player: " + getDesc() + " Points Per Game: " + getPoints() + " Cost: " + "$" + getCost();
+	}
 	
 }
