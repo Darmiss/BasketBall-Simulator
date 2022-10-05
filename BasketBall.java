@@ -282,6 +282,7 @@ public class BasketBall{
 		{
 		System.out.println(gson.fromJson(stringArr[i],Report.class));
 		}
+		System.out.println();
 		}
 		catch(FileNotFoundException e)
 		{
