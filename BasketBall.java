@@ -77,7 +77,7 @@ public class BasketBall{
 	   {
 		   if(customerName==null)
 		   {
-			   System.out.println("Please enter you name: ");
+			   System.out.println("Please enter your name: ");
 			   customerName=input.nextLine();
 		   }
 		   //User
