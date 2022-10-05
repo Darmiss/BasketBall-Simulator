@@ -6,5 +6,15 @@ TO RUN:
 java -cp json-simple-1.1.1.jar;. BasketBall.java
 (semicolon and period after .jar, otherwise will not find other class files)
 
-
-*****NOTE: Each session(java run) of the program requires you to read in a playerdata json file and a accessorydata json file that are in the same directory as the java file,(notice how the menu is empty if this is not done)****
+/HOW TO USE,
+		//Player oldMan = new playerType("Old man 5'2 whatever", 52(points),23.20(cost))
+		//TO ADD ACCESSORIES
+		//CustomAcc WristBand = new CustomAcc("WristBand",23(points),12.20(cost))
+		//CAN DO MULTIPLE TIMES SO
+		//CustomAcc WristBand = new CustomAcc("WristBand",23(points),12.20(cost))
+		//CustomAcc WristBand = new CustomAcc("WristBand",23(points),12.20(cost))
+		//CustomAcc WristBand = new CustomAcc("WristBand",23(points),12.20(cost))
+		//TO PRINT
+		//System.out.println(oldMan.getDesc())
+		//System.out.println(oldMan.getPoints())
+		//System.out.println(oldMan.getCost())
