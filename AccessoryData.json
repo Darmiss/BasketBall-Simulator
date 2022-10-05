@@ -1,0 +1,11 @@
+{"accType":"Wristband","accPoints":8,"accCost":2.0}
+{"accType":"Headband","accPoints":10,"accCost":4.0}
+{"accType":"Knee Brace","accPoints":9,"accCost":5.0}
+{"accType":"Do-Rag","accPoints":25,"accCost":8.0}
+{"accType":"Skull Cap","accPoints":26,"accCost":3.0}
+{"accType":"Arm Sleeve","accPoints":1,"accCost":40.0}
+{"accType":"No Prescription Specs","accPoints":13,"accCost":20.0}
+{"accType":"Elbow Pad","accPoints":8,"accCost":17.0}
+{"accType":"Finger Tape","accPoints":1,"accCost":2.0}
+{"accType":"Face Mask","accPoints":6,"accCost":5.0}
+{"accType":"Mouth Guard","accPoints":-10,"accCost":10.0}

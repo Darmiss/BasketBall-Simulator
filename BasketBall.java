@@ -24,20 +24,7 @@ public class BasketBall{
 	static String playerDataFileName;
     public static void main(String[]args) throws  InterruptedException //throws for the timeUnit.Seconds
 	{
-		if(findJsonFile("report.json",new File("report.json")) == 0)  //Checking for a report json file, if not found new one is made
-		{
-			System.out.println("No report file found, making blank new one");
-			try
-			{
-			FileWriter newReport = new FileWriter("report.json");
-			newReport.close();
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
+	  checkForReportFile(); //ensuring a report.json file is present
 	  System.out.println("BASKETBALL SIMULATOR V0.00001, by: Lucas Mazur & Austin McCready");
 	  TimeUnit.SECONDS.sleep(1);
 	  
@@ -77,7 +64,7 @@ public class BasketBall{
 	   {
 		   if(customerName==null)
 		   {
-			   System.out.println("Please enter you name: ");
+			   System.out.println("Please enter your name: ");
 			   customerName=input.nextLine();
 		   }
 		   //User
@@ -124,6 +111,7 @@ public class BasketBall{
 			}
 			else if(userInt == 2)
 			{
+				
 				makeAnOrder();
 			}
 			
@@ -179,7 +167,44 @@ public class BasketBall{
 			}
 			else if(managerInt==4)
 			{
-			   addAccessory();
+				boolean Isuccess=false;
+				boolean Dsuccess=false;
+				String tempString="";
+				String newType="";
+				int points=0;
+				double cost=0;
+				System.out.println("Please enter the new accessory descritpion(i.e wristband etc): ");
+				newType=input.nextLine();
+				System.out.println("Please enter the amount of points: ");
+				while(!Isuccess)
+				{
+				try
+				{
+				tempString=input.nextLine();
+				points=Integer.parseInt(tempString);
+				Isuccess=true;
+				}
+				catch(NumberFormatException e)
+				{
+				System.out.println("Not a number, Enter a number:");
+				}
+				}
+				System.out.println("Please enter the cost of this accessory: ");
+				while(!Dsuccess)
+				{
+				try
+				{
+					tempString=input.nextLine();
+					cost=Double.parseDouble(tempString);
+					Dsuccess=true;
+				}
+				catch(NumberFormatException e)
+				{
+					System.out.println("Not a number, Enter a number:(Dont add the $)");
+				}
+				}
+				addAccessory(newType,points,cost);
+				
 			}
 			else if(managerInt==5)
 			{
@@ -187,7 +212,45 @@ public class BasketBall{
 			}
 			else if(managerInt==6)
 			{
-				addPlayerData();
+				//Add playerData
+				boolean Isuccess=false;
+				boolean Dsuccess=false;
+				String tempString="";
+				String newType="";
+				int points=0;
+				double cost=0;
+				System.out.println("Please enter the new players type(i.e oldman 5'2 etc): ");
+				newType=input.nextLine();
+				System.out.println("Please enter the amount of points: ");
+				while(!Isuccess)
+				{
+				try
+				{
+				tempString=input.nextLine();
+				points=Integer.parseInt(tempString);
+				Isuccess=true;
+				}
+				catch(NumberFormatException e)
+				{
+				System.out.println("Not a number, Enter a number:");
+				}
+				}
+				System.out.println("Please enter the cost of this player: ");
+				while(!Dsuccess)
+				{
+				try
+				{
+					tempString=input.nextLine();
+					cost=Double.parseDouble(tempString);
+					Dsuccess=true;
+				}
+				catch(NumberFormatException e)
+				{
+					System.out.println("Not a number, Enter a number:(Dont add the $)");
+				}
+				}
+				addPlayerData(newType,points,cost);
+				
 			}
 			else
 			{
@@ -197,7 +260,7 @@ public class BasketBall{
 			
 			
 			
-			if(managerInt != 1 && managerInt !=2)
+			if(managerInt != 1 && managerInt !=2 && managerInt !=3 && managerInt !=4 && managerInt !=5 &&managerInt !=6 && managerInt!=7)
 			{
 				if(managerInt!=8)
 				{
@@ -240,6 +303,59 @@ public class BasketBall{
 	}
 	
 	
+	private static void checkForReportFile()
+	{
+		if(findJsonFile("report.json",new File("report.json")) == 0)  //Checking for a report json file, if not found new one is made
+		{
+			System.out.println("No report file found, making blank new one");
+			try
+			{
+			FileWriter newReport = new FileWriter("report.json");
+			newReport.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}	
+	}
+	
+	private static void checkForPlayerDataFile()
+	{
+		if(findJsonFile("PlayerData.json",new File("PlayerData.json")) == 0)  //Checking for a PlayerData json file, if not found new one is made
+		{
+			System.out.println("No PlayerData file found, making blank new one");
+			try
+			{
+			FileWriter newReport = new FileWriter("PlayerData.json");
+			newReport.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
+	private static void checkForAccessoryDataFile()
+	{
+		if(findJsonFile("AccessoryData.json",new File("AccessoryData.json")) == 0)  //Checking for a AccessoryData json file, if not found new one is made
+		{
+			System.out.println("No AccessoryData file found, making blank new one");
+			try
+			{
+			FileWriter newFile = new FileWriter("AccessoryData.json");
+			newFile.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 	private static void readAccessoryFile() //Manager uses to read in a accessory file
 	{
 		//gson
@@ -256,6 +372,7 @@ public class BasketBall{
 	
 	private static void printReport() //Will print report of orders made(sorted by latest date)
 	{
+		Gson gson = new Gson();
 		try
 		{
 		TimeUnit.SECONDS.sleep(1);
@@ -265,35 +382,18 @@ public class BasketBall{
 		}
 		//Report file is named report.json
 	    //might be blank, but will exist
-		Gson gson = new Gson();
-		try
-		{
-		BufferedReader in = new BufferedReader(new FileReader("report.json"));
-		String str;
-		List<String> list = new ArrayList<String>();
-		while((str = in.readLine()) != null)  //Reading file line by line, putting into string array, using arraylist prior(resizable)
-		{
-		list.add(str);
-		}
-		String[] stringArr = list.toArray(new String[0]);
+		String[] stringArr = getJsonFileString("report.json");
 		if(stringArr.length==0)
 		{
 			System.out.println("No reports present ");
 		}
+		System.out.println("NEWEST->OLDEST");
 		for(int i=stringArr.length-1;i>=0;i--)
 		{
 		System.out.println(gson.fromJson(stringArr[i],Report.class));
 		}
 		System.out.println();
-		}
-		catch(FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch(IOException e)
-		{
-			e.printStackTrace();
-		}
+		
 	}
 	
 	private static void addReport() //Invoked when an order is made
@@ -314,9 +414,24 @@ public class BasketBall{
 		
 	}
 	
-	private static void addAccessory() //Manager uses to append accesory onto json files
+	private static void addAccessory(String type,int points,double cost) //Manager uses to append accesory onto json files
 	{
 		//gson
+		Gson gson = new Gson();
+		checkForAccessoryDataFile(); //will make new one if not there
+		CustomAcc newAccType = new CustomAcc(type,points,cost);
+		try
+		{
+		   FileWriter playerFile = new FileWriter("AccessoryData.json",true);
+		   playerFile.write(gson.toJson(newAccType));
+		   playerFile.write("\n");
+		   playerFile.close();
+		}catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println("Accessory added");
+		
 	}
 	
 	private static void removeAccesory() //Manager uses to remove accessory from json files
@@ -328,9 +443,25 @@ public class BasketBall{
 		//gson
 	}
 	
-	private static void addPlayerData() //Manager uses to add player type to a json file
+	private static void addPlayerData(String type,int points,double cost) //Manager uses to add player type to a json file
 	{
 		//gson
+		Gson gson = new Gson();
+		checkForPlayerDataFile(); //will make new one if not there
+		Player newPlayerType = new playerType(type,points,cost);
+		try
+		{
+		   FileWriter playerFile = new FileWriter("PlayerData.json",true);
+		   playerFile.write(gson.toJson(newPlayerType));
+		   playerFile.write("\n");
+		   playerFile.close();
+		}catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println("PlayerType added");
+		
+		
 	}
 	
 	private static void removePlayerData() //Manager uses this to remove player type from a json file
@@ -354,6 +485,33 @@ public class BasketBall{
 			return 0;
 		}
 	}
+	
+	public static String[] getJsonFileString(String fileName) //given json file name, will return a string array of each line of that json file(can then use fromJson(*))
+	{
+		Gson gson = new Gson();
+		String[] stringArr = null;
+		try
+		{
+		BufferedReader in = new BufferedReader(new FileReader(fileName));
+		String str;
+		List<String> list = new ArrayList<String>();
+		while((str = in.readLine()) != null)  //Reading file line by line, putting into string array, using arraylist prior(resizable)
+		{
+		list.add(str);
+		}
+		stringArr = list.toArray(new String[0]);
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		return stringArr;
+	}
+	
 	
 }
 

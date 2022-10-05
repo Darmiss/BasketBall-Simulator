@@ -28,8 +28,8 @@ public class Report
 	
 	public String toString()
 	{	
-		return "Date: " + dateDone + "Customer Name: " + custName + "PlayerType: " + playerType + "AccessoryCost: " + accesoryCost + 
-		"Total Cost: " + totalCost;
+		return "Date: " + dateDone + " CustomerName: " + custName + " PlayerType: " + playerType + " AccessoryCost: " + accesoryCost + 
+		" TotalCost: " + totalCost;
 	}
 	
 	
