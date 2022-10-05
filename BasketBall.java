@@ -507,14 +507,7 @@ public class BasketBall{
 		
 		addReport();
 	}
-	/*	Player customPlayer = new playerType("8th grader",45,45.50);
-		CustomAcc newAccessory = new CustomAcc("WristBand",45,23.30);
-		CustomAcc newAccessory2 = new CustomAcc("legbands",9,283.30);
-		customPlayer = new playerAcc(customPlayer,newAccessory);
-		customPlayer = new playerAcc(customPlayer,newAccessory);
-		customPlayer = new playerAcc(customPlayer,newAccessory2);
-		System.out.println(customPlayer.getDesc() + customPlayer.getPoints() + " " + customPlayer.getCost());
-	*/	
+	
 	
 	private static void checkForReportFile()
 	{
