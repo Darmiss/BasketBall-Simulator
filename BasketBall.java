@@ -167,7 +167,7 @@ public class BasketBall{
 			
 			if(managerInt==1)
 			{
-				System.out.println(printReport());
+				printReport();
 			}
 			else if(managerInt==2)
 			{
