@@ -77,7 +77,7 @@ public class BasketBall{
 	   {
 		   if(customerName==null)
 		   {
-			   System.out.println("Please enter your name: ");
+			   System.out.println("Please enter you name: ");
 			   customerName=input.nextLine();
 		   }
 		   //User
@@ -234,6 +234,8 @@ public class BasketBall{
 	private static void makeAnOrder() //Users uses this to order players, will also print total cost/points per game
 	{
 		//make report in the json file,customerName is defined when here
+		//Decorator
+		//Player newPlayer = new Player(new Acc)
 		addReport();
 	}
 	
