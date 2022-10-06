@@ -185,8 +185,8 @@ public class BasketBall{
 		{
 			e.printStackTrace();
 		}
-			System.out.println("Press 1 to print report, Press 2 to read in accesoryData json file, Press 3 to read in playerData json file, " + "\n" +
-			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to go back."); //menu options
+			System.out.println("Press 1 to print report, Press 2 to read in accessoryData json file, Press 3 to read in playerData json file, " + "\n" +
+			"Press 4 to add Accessory, Press 5 to remove Accessory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to go back."); //menu options
 			managerString=input.nextLine();
 			try
 			{
@@ -606,7 +606,7 @@ public class BasketBall{
 		   playerFile.write(gson.toJson(newAccType));
 		   playerFile.write("\n");
 		   playerFile.close();
-		   accessoryData=getJsonFileString("AccesoryData.json");
+		   accessoryData=getJsonFileString("AccessoryData.json");
 		}catch(IOException e)
 		{
 			e.printStackTrace();
