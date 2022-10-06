@@ -202,11 +202,19 @@ public class BasketBall{
 			}
 			else if(managerInt==2)
 			{
+				Gson gson = new Gson();
 				System.out.println("Note the accessoryData will be overwritten");
 				String fileName="";
 				System.out.println("AccessoryData: Please enter a json file name,(include .json)");
 				fileName=input.nextLine();
+				if(findJsonFile(fileName,new File(fileName))==0)
+				{
+					System.out.println("File not found");
+				}
+				else
+				{
 				readAccessoryFile(fileName);
+				}
 			}
 			else if(managerInt==3)
 			{
@@ -214,7 +222,14 @@ public class BasketBall{
 				String fileName="";
 				System.out.println("PlayerData: Please enter a json file name,(include .json)");
 				fileName =input.nextLine();
+				if(findJsonFile(fileName,new File(fileName))==0)
+				{
+					System.out.println("File not found");
+				}
+				else
+				{
 				readPlayerDataFile(fileName);
+				}
 			}
 			else if(managerInt==4)
 			{
@@ -623,6 +638,7 @@ public class BasketBall{
 	
 	private static void readPlayerDataFile(String fileName) //Manager uses to read in a player file
 	{
+		
 		overwriteFile("PlayerData.json",2,fileName);
 		playerData=getJsonFileString(fileName);
 	}
@@ -935,7 +951,7 @@ public class BasketBall{
 		}
 		catch(FileNotFoundException e)
 		{
-			e.printStackTrace();
+			System.out.println("File not found");
 		}
 		catch(IOException e)
 		{
