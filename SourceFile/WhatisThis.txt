@@ -1,4 +1,4 @@
-Both json files feature the projects basic data types and accessories:
+Both json files(playerData, accessoryData) feature the projects basic data types and accessories:
 
 Player Types:
 8-year old 4'2" third grader.  $20, 10 pts per game
@@ -19,3 +19,7 @@ Elbow Pad, $17, adds 8 pts per game
 Finger Tape, $2, adds 1 pt per game
 Face Mask, $5, adds 6 pts per game
 Mouth Guard, $10, subtracts 10 pts per game
+
+
+The DLC files can be used in the demo of the read in feature of the manager, feauting different player types and accessories,
+Note:Reading will perm. overwrite files so dont lose these.(save prior)
