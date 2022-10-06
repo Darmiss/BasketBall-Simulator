@@ -184,7 +184,7 @@ public class BasketBall{
 			e.printStackTrace();
 		}
 			System.out.println("Press 1 to print report, Press 2 to read in accesoryData json file, Press 3 to read in playerData json file, " + "\n" +
-			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to go back."); //menu options
+			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to save the playerData." + "Press 9 to save the AccessoryData" + "\n" + "Press 10 to go back"); //menu options
 			managerString=input.nextLine();
 			try
 			{
@@ -202,6 +202,7 @@ public class BasketBall{
 			}
 			else if(managerInt==2)
 			{
+				System.out.println("Note the accessoryData will be overwritten");
 				String fileName="";
 				System.out.println("AccessoryData: Please enter a json file name,(include .json)");
 				fileName=input.nextLine();
@@ -209,6 +210,7 @@ public class BasketBall{
 			}
 			else if(managerInt==3)
 			{
+				System.out.println("Note the playerData file will be overwritten, save before or previous types will be loss");
 				String fileName="";
 				System.out.println("PlayerData: Please enter a json file name,(include .json)");
 				fileName =input.nextLine();
@@ -305,19 +307,29 @@ public class BasketBall{
 			{
 				removePlayerData();
 			}
-			
-			
-			
-			
-			if(managerInt != 1 && managerInt !=2 && managerInt !=3 && managerInt !=4 && managerInt !=5 &&managerInt !=6 && managerInt!=7)
+			else if(managerInt == 8)
 			{
-				if(managerInt!=8)
+				System.out.println("Saving playerData...");
+				savePlayerData();
+			}
+			else if(managerInt ==9)
+			{
+				System.out.println("Saving accessoryData...");
+				saveAccessoryData();
+			}
+			
+			
+			
+			
+			if(managerInt != 1 && managerInt !=2 && managerInt !=3 && managerInt !=4 && managerInt !=5 &&managerInt !=6 && managerInt!=7 && managerInt!=8 && managerInt !=9)
+			{
+				if(managerInt!=10)
 				{
 				System.out.println("Error: Wrong input");
 				}
 			}
 		}
-		while(managerInt!=8);
+		while(managerInt!=10);
 		
 	}
 	
@@ -380,6 +392,11 @@ public class BasketBall{
 	
 	private static void makeAnOrder() //Users uses this to order players, will also print total cost/points per game
 	{
+		if(playerData.length==0)
+		{
+			System.out.println("No playerdata found, cannot order");
+			return;
+		}
 		Gson gson = new Gson();
 		String temp ="";
 		int orderInput=-1;
@@ -505,6 +522,78 @@ public class BasketBall{
 		
 		addReport();
 	}
+	
+	private static  void saveAccessoryData()
+	{
+		Gson gson = new Gson();
+		int length = -1;
+		try
+		{
+			FileWriter fw = new FileWriter("SavedAccessoryData.json");
+			FileReader fr = new FileReader("AccessoryData.json");
+			BufferedReader br = new BufferedReader(fr);
+			
+			for(int i = 0; i < accessoryData.length;i++) //loop through each line in the file
+			{
+				
+					CustomAcc readAcc = gson.fromJson(accessoryData[i],CustomAcc.class);
+					fw.write(gson.toJson(readAcc));
+					fw.write("\n");
+			}
+			
+
+			fr.close();
+			fw.close();
+			br.close();
+			System.out.println("Accessory File saved as, SavedAccessoryData.json");
+		}catch(FileNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		
+	}
+	
+	private static void savePlayerData()
+	{
+		Gson gson = new Gson();
+		int length = -1;
+		try
+		{
+			FileWriter fw = new FileWriter("SavedPlayerData.json");
+			FileReader fr = new FileReader("PlayerData.json");
+			BufferedReader br = new BufferedReader(fr);
+			
+			for(int i = 0; i < playerData.length;i++) //loop through each line in the file
+			{
+				
+			
+						Player newPlayer = gson.fromJson(playerData[i],playerType.class);
+						fw.write(gson.toJson(newPlayer));
+						fw.write("\n");
+				
+			}
+			
+
+			fr.close();
+			fw.close();
+			br.close();
+			System.out.println("PlayerData File saved as, SavedPlayerData.json");
+		}
+			catch(FileNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+			
+		
+	}
 
 	private static void checkForReportFile()
 	{
@@ -527,25 +616,15 @@ public class BasketBall{
 	
 	private static void readAccessoryFile(String fileName) //Manager uses to read in a accessory file
 	{
-		if(findJsonFile(fileName,new File(fileName))==0) //not found
-		{
-			System.out.println("Could not find the file, did you spell it correctly?");
-			return;
-		}
-		accessoryData=getJsonFileString(fileName);
-		System.out.println("Accessory File Found: Added");
+		overwriteFile("AccessoryData.json",1,fileName);
+		accessoryData=getJsonFileString("AccessoryData.json");
 		
 	}
 	
 	private static void readPlayerDataFile(String fileName) //Manager uses to read in a player file
 	{
-		if(findJsonFile(fileName,new File(fileName))==0) //not found
-		{
-			System.out.println("Could not find the file, did you spell it correctly?");
-			return;
-		}
+		overwriteFile("PlayerData.json",2,fileName);
 		playerData=getJsonFileString(fileName);
-		System.out.println("Player File Found: Added");
 	}
 	
 	private static void printReport() //Will print report of orders made(sorted by latest date)
@@ -729,7 +808,6 @@ public class BasketBall{
 		//accOrPlayer, 1 = accessory, 2 = player
 		Gson gson = new Gson();
 		File oldFile = new File(fileName);
-		File newFile = new File("temp.json");
 		int length = -1;
 		try
 		{
@@ -783,6 +861,60 @@ public class BasketBall{
 			System.out.println("deleteLineInFile Error");
 		}
 	}
+	
+	public static void overwriteFile(String fileName,int accOrPlayer,String overWriteFileName) //removing a json object(line) from a file for the remove methods
+	{
+		//accOrPlayer, 1 = accessory, 2 = player
+		//For manager reading to overwrite with a new json file, the accesorydata or playerdata json files
+		Gson gson = new Gson();
+		File oldFile = new File(fileName);
+		int length = -1;
+		String[] overWriteFileString = getJsonFileString(overWriteFileName);
+		try
+		{
+			FileWriter fw = new FileWriter(fileName);
+			FileReader fr = new FileReader(overWriteFileName);
+			BufferedReader br = new BufferedReader(fr);
+			
+			for(int i = 0; i < overWriteFileString.length;i++) //loop through each line in the file
+			{
+				
+				
+					if(accOrPlayer==1)
+					{
+					CustomAcc readAcc = gson.fromJson(overWriteFileString[i],CustomAcc.class);
+					fw.write(gson.toJson(readAcc));
+					fw.write("\n");
+					}
+					else if(accOrPlayer ==2)
+					{
+						Player newPlayer = gson.fromJson(overWriteFileString[i],playerType.class);
+						fw.write(gson.toJson(newPlayer));
+						fw.write("\n");
+					}
+				
+			}
+			
+
+			fr.close();
+			fw.close();
+			br.close();
+			System.out.println("New data loaded: File overwritten");
+			
+			
+		}
+		catch(FileNotFoundException e)
+		{
+		System.out.println("File Not Found.");
+		}
+		catch(IOException e)
+		{
+			System.out.println("deleteLineInFile Error");
+		}
+	}
+	
+	
+	
 	
 	
 	
