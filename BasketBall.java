@@ -19,15 +19,12 @@ public class BasketBall{
 	static Player customerPlayer; //to store playertype for reports
 	static String customerName; //customer name for a session
 	static double playerCost; //subtracting this from total cost to get accesory cost for reports
-	static boolean accessories=false;
-	static int original=-1;
     public static void main(String[]args) throws  InterruptedException //throws for the timeUnit.Seconds
 	{
 	  checkForReportFile(); //ensuring a report.json file is present
 	  System.out.println("BASKETBALL SIMULATOR V0.00001, by: Lucas Mazur & Austin McCready");
 	  TimeUnit.SECONDS.sleep(1);
 	  loadOriginals();
-	  
 	   String userInput="";
 	   int intInput=-1;
 	   do
@@ -95,6 +92,7 @@ public class BasketBall{
 				}
 			}
 			else
+				
 			{
 				accessoryData=getJsonFileString("AccessoryData.json");
 				System.out.println("AccessoryData loaded");
@@ -185,8 +183,8 @@ public class BasketBall{
 		{
 			e.printStackTrace();
 		}
-			System.out.println("Press 1 to print report, Press 2 to read in accessoryData json file, Press 3 to read in playerData json file, " + "\n" +
-			"Press 4 to add Accessory, Press 5 to remove Accessory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to go back."); //menu options
+			System.out.println("Press 1 to print report, Press 2 to read in accesoryData json file, Press 3 to read in playerData json file, " + "\n" +
+			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to go back."); //menu options
 			managerString=input.nextLine();
 			try
 			{
@@ -303,7 +301,7 @@ public class BasketBall{
 				addPlayerData(newType,points,cost);
 				
 			}
-			else
+			else if(managerInt == 7)
 			{
 				removePlayerData();
 			}
@@ -376,7 +374,7 @@ public class BasketBall{
 			
 		}
 		
-		
+	
 		return menu;
 	}
 	
@@ -507,8 +505,7 @@ public class BasketBall{
 		
 		addReport();
 	}
-	
-	
+
 	private static void checkForReportFile()
 	{
 		if(findJsonFile("report.json",new File("report.json")) == 0)  //Checking for a report json file, if not found new one is made
@@ -612,13 +609,47 @@ public class BasketBall{
 			e.printStackTrace();
 		}
 		System.out.println("Accessory added");
-		
+		System.out.println(showMenu());
 	}
 	
 	private static void removeAccesory() //Manager uses to remove accessory from json files
 	{
+		Gson gson = new Gson();
+		String temp="";
+		int orderInput=-1;
+		if(accessoryData.length==0)
+		{
+			System.out.println("There are no accessories to remove");
+			return;
+		}
+		System.out.println(showMenu());
+		System.out.println("Which Accessory would you like to remove? ");
+		System.out.println("Select a Accessory Type 0-" + (accessoryData.length-1));
+		do
+		{
+			try
+			{
+				temp=input.nextLine();
+				orderInput=Integer.parseInt(temp);
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Wrong Input");
+			}
+			if(orderInput <0 || orderInput >(accessoryData.length-1))
+			{
+				System.out.println("Please enter a valid range for the Accessory Table");
+			}
+		} while(orderInput <0 || orderInput >(accessoryData.length-1));
 		
-		//gson
+		deleteLineInFile("AccessoryData.json",orderInput,1);
+		System.out.println("Accessory removed");
+		accessoryData=getJsonFileString("AccessoryData.json");
+		System.out.println(showMenu());
+		
+		
+		
+	
 	}
 	
 	private static void addPlayerData(String type,int points,double cost) //Manager uses to add player type to a json file
@@ -638,13 +669,45 @@ public class BasketBall{
 			e.printStackTrace();
 		}
 		System.out.println("PlayerType added");
-		
+		System.out.println(showMenu());
 		
 	}
 	
 	private static void removePlayerData() //Manager uses this to remove player type from a json file
 	{
-		//gson
+		Gson gson = new Gson();
+		String temp="";
+		int orderInput=-1;
+		if(playerData.length==0)
+		{
+			System.out.println("There are no player types to remove");
+			return;
+		}
+		System.out.println(showMenu());
+		System.out.println("Which Player Type would you like to remove? ");
+		System.out.println("Select a Player Type 0-" + (playerData.length-1));
+		do
+		{
+			try
+			{
+				temp=input.nextLine();
+				orderInput=Integer.parseInt(temp);
+			}
+			catch(NumberFormatException e)
+			{
+				System.out.println("Wrong Input");
+			}
+			if(orderInput <0 || orderInput >(playerData.length-1))
+			{
+				System.out.println("Please enter a valid range for the PlayerType Table");
+			}
+		} while(orderInput <0 || orderInput >(playerData.length-1));
+		
+		deleteLineInFile("PlayerData.json",orderInput,2);
+		System.out.println("Player Type removed");
+		playerData=getJsonFileString("PlayerData.json");
+		System.out.println(showMenu());
+		
 	}
 	
 	private static int findJsonFile(String fileName,File wantedFile) //1 if found 0 if not(same directory as java file only)
@@ -659,6 +722,69 @@ public class BasketBall{
 			return 0;
 		}
 	}
+	
+
+	public static void deleteLineInFile(String fileName,int linetoRemove,int accOrPlayer) //removing a json object(line) from a file for the remove methods
+	{
+		//accOrPlayer, 1 = accessory, 2 = player
+		Gson gson = new Gson();
+		File oldFile = new File(fileName);
+		File newFile = new File("temp.json");
+		int length = -1;
+		try
+		{
+			FileWriter fw = new FileWriter(fileName);
+			FileReader fr = new FileReader(fileName);
+			BufferedReader br = new BufferedReader(fr);
+			
+			if(accOrPlayer==1)
+			{
+			length = accessoryData.length;
+			}
+			else if (accOrPlayer ==2)
+			{
+			length = playerData.length;	
+			}
+			
+			for(int i = 0; i < length;i++) //loop through each line in the file
+			{
+				
+				if(i != linetoRemove)
+				{
+					if(accOrPlayer==1)
+					{
+					CustomAcc readAcc = gson.fromJson(accessoryData[i],CustomAcc.class);
+					fw.write(gson.toJson(readAcc));
+					fw.write("\n");
+					}
+					else if(accOrPlayer ==2)
+					{
+						Player newPlayer = gson.fromJson(playerData[i],playerType.class);
+						fw.write(gson.toJson(newPlayer));
+						fw.write("\n");
+					}
+				}
+			}
+			
+
+			fr.close();
+			fw.close();
+			br.close();
+
+			
+			
+		}
+		catch(FileNotFoundException e)
+		{
+		System.out.println("deleteLineInFile Error");
+		}
+		catch(IOException e)
+		{
+			System.out.println("deleteLineInFile Error");
+		}
+	}
+	
+	
 	
 	public static String[] getJsonFileString(String fileName) //given json file name, will return a string array of each line of that json file(can then use fromJson(*))
 	{
