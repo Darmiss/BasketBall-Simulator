@@ -11,6 +11,8 @@ SourceFiles, contains the files for the project i.e 45 year old, and accessories
 copy and paste into the main directory and they will be automatically used, otherwise blank playerdata
 and accesory data will be made, which you can then manually(using manager) add new types of players and accessories, you can manually load them using read in manager(manager and playerdata json files)
 
+Saved Files are called SavedAcccessoryData and SavedPlayerData, (only one saveslot)
+
 
 
 -Example of decorator pattern:
