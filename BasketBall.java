@@ -33,7 +33,7 @@ public class BasketBall{
 	   {
 	   TimeUnit.SECONDS.sleep(1);
 	   System.out.println("Who are you?");
-	   System.out.print("1.) A Manager, " + " 2.)A User, " + "3.) Exit " + "\n");
+	   System.out.print("1.) A Manager " + " 2.) A User " + "3.) Exit " + "\n");
 	   userInput=input.nextLine();
 	   try
 	   {
@@ -125,7 +125,7 @@ public class BasketBall{
 		int userInt=-1;
 		do
 		{
-			System.out.println("Press 1 to view the menu, Press 2 to Make an Order, 3 to go back."); //Menu items
+			System.out.println("Press 1: View the menu, Press 2: Make an Order, 3: Go back."); //Menu items
 			userString=input.nextLine();
 				
 			try
@@ -184,7 +184,7 @@ public class BasketBall{
 			e.printStackTrace();
 		}
 			System.out.println("Press 1 to print report, Press 2 to read in accesoryData json file, Press 3 to read in playerData json file, " + "\n" +
-			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData,Press 8 to save the playerData." + "Press 9 to save the AccessoryData" + "\n" + "Press 10 to go back"); //menu options
+			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData, Press 8 to save the playerData, " + "Press 9 to save the AccessoryData" + "\n" + "Press 10 to go back"); //menu options
 			managerString=input.nextLine();
 			try
 			{
@@ -354,7 +354,7 @@ public class BasketBall{
 		String menu ="";
 		if (accessoryData.length==0 && playerData.length==0)
 		{
-			return "No accessory and no player data, please load in an json file,No menu displayed"; 
+			return "No accessory and no player data, please load in an json file, No menu displayed"; 
 		}
 		else if (accessoryData.length==0)
 		{
@@ -962,4 +962,3 @@ public class BasketBall{
 	
 	
 }
-
