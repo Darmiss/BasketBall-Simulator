@@ -183,8 +183,8 @@ public class BasketBall{
 		{
 			e.printStackTrace();
 		}
-			System.out.println("Press 1 to print report, Press 2 to read in accesoryData json file, Press 3 to read in playerData json file, " + "\n" +
-			"Press 4 to add Accessory, Press 5 to remove Accesory, Press 6 to add PlayerData, " + "\n" +"Press 7 to remove PlayerData, Press 8 to save the playerData, " + "Press 9 to save the AccessoryData" + "\n" + "Press 10 to go back"); //menu options
+			System.out.println("Press 1 to print report. " + "\n" + "Press 2 to read in accesoryData json file-Press 3 to read in playerData json file. " + "\n" +
+			"Press 4 to add Accessory-Press 5 to remove Accesory. " + "\n" + "Press 6 to add PlayerData-Press 7 to remove PlayerData. " + "\n" + "Press 8 to save the playerData-Press 9 to save the AccessoryData." + "\n" + "Press 10 to go back"); //menu options
 			managerString=input.nextLine();
 			try
 			{
@@ -519,9 +519,21 @@ public class BasketBall{
 		
 		newPlayer = new playerAcc(newPlayer,gson.fromJson(accessoryData[orderInput],CustomAcc.class));
 		System.out.println("Accessory added.");
-		System.out.println("More?, press 1 to add another.");
+		System.out.println("More?, press 1 to add another, Press any other number to continue.");
+		boolean success = false;
+		do
+		{
 		temp=input.nextLine();
+		try
+		{
 		accInput=Integer.parseInt(temp);
+		success=true;
+		}
+		catch(NumberFormatException e)
+		{
+			System.out.println("Input Error");
+		}
+		}while(!success);
 			}while(accInput==1);
 			
 			
